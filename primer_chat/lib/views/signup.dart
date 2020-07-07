@@ -7,6 +7,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final formKey = GlobalKey<FormState>();
   TextEditingController userTextEditingController = new TextEditingController();
   TextEditingController emailTextEditingController =
       new TextEditingController();
@@ -25,22 +26,29 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                //Texto en si
-                controller: userTextEditingController,
-                decoration: textFieldHintDecoration("apodo"),
-                style: mediumTextBlack(),
-              ),
-              TextField(
-                //Texto en si
-                controller: emailTextEditingController,
-                decoration: textFieldHintDecoration("mail"),
-                style: mediumTextBlack(),
-              ),
-              TextField(
-                controller: passwordTextEditingController,
-                decoration: textFieldHintDecoration("contraseña"),
-                style: mediumTextBlack(),
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    TextField(
+                      //Texto en si
+                      controller: userTextEditingController,
+                      decoration: textFieldHintDecoration("apodo"),
+                      style: mediumTextBlack(),
+                    ),
+                    TextField(
+                      //Texto en si
+                      controller: emailTextEditingController,
+                      decoration: textFieldHintDecoration("mail"),
+                      style: mediumTextBlack(),
+                    ),
+                    TextField(
+                      controller: passwordTextEditingController,
+                      decoration: textFieldHintDecoration("contraseña"),
+                      style: mediumTextBlack(),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 8,
