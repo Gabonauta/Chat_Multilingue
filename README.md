@@ -6,6 +6,7 @@ Chat_Multilingue
 Clonar o descargar zip
 Abrir con Android Estudio, VSCODE o IDE de preferencia 
 
+
 Estado de Flutter Doctor en la implementacion:
 [flutter] flutter doctor -v
 [✓] Flutter (Channel stable, v1.17.3, on Linux, locale es_ES.UTF-8)
