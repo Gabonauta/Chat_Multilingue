@@ -13,6 +13,9 @@ class _SignUpState extends State<SignUp> {
       new TextEditingController();
   TextEditingController passwordTextEditingController =
       new TextEditingController();
+  signMeUP() {
+    if (formKey.currentState.validate()) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +33,20 @@ class _SignUpState extends State<SignUp> {
                 key: formKey,
                 child: Column(
                   children: [
-                    TextField(
+                    TextFormField(
                       //Texto en si
+
                       controller: userTextEditingController,
                       decoration: textFieldHintDecoration("apodo"),
                       style: mediumTextBlack(),
                     ),
-                    TextField(
+                    TextFormField(
                       //Texto en si
                       controller: emailTextEditingController,
                       decoration: textFieldHintDecoration("mail"),
                       style: mediumTextBlack(),
                     ),
-                    TextField(
+                    TextFormField(
                       controller: passwordTextEditingController,
                       decoration: textFieldHintDecoration("contraseña"),
                       style: mediumTextBlack(),
@@ -66,15 +70,20 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: 16,
               ),
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.blueAccent, Colors.cyan]),
-                    borderRadius: BorderRadius.circular(30)),
-                child: Text("Registrate", style: mediumText()),
+              GestureDetector(
+                onTap: () {
+                  signMeUP();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Colors.blueAccent, Colors.cyan]),
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text("Registrate", style: mediumText()),
+                ),
               ),
               SizedBox(
                 height: 16,
