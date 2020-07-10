@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:primer_chat/views/signin.dart';
-import 'package:primer_chat/views/signup.dart';
+import 'helper/authenticate.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,11 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignUp(),
+      home: Authenticate(),
     );
   }
 }

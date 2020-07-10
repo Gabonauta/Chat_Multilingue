@@ -4,6 +4,8 @@ import 'package:primer_chat/views/chatRoom.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
 
 class SignUp extends StatefulWidget {
+  final Function toggle;
+  SignUp(this.toggle);
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -151,12 +153,20 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             Text("Ya tienes una cuenta? ",
                                 style: mediumTextBlack()),
-                            Text(
-                              "Inicia Sesion",
-                              style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                  decoration: TextDecoration.underline),
+                            GestureDetector(
+                              onTap: () {
+                                widget.toggle();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  "Inicia Sesion",
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 18,
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ),
                             )
                           ]),
                       SizedBox(
