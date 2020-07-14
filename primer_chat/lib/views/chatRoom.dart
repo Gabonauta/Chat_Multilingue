@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:primer_chat/helper/authenticate.dart';
+import 'package:primer_chat/helper/constants.dart';
+import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/auth.dart';
 import 'package:primer_chat/views/search.dart';
 
@@ -11,6 +13,18 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   AuthMethos authMethos = new AuthMethos();
+  @override
+  void initState() {
+    getUserInfo();
+    super.initState();
+  }
+
+  getUserInfo() async {
+    Constants.myName =
+        await PreferencesFunctions.getUserNameKeyInSharedPreference();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

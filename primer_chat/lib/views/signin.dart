@@ -30,16 +30,16 @@ class _SignInState extends State<SignIn> {
     if (formkey.currentState.validate()) {
       PreferencesFunctions.saveUserEmailKeyInSharedPreference(
           emailTextEditingController.text);
-      //
-      setState(() {
-        isLoading = true;
-      });
       databaseMethos
           .getUserByUserEmail(emailTextEditingController.text)
           .then((val) {
         snapshotUSerInfo = val;
-        PreferencesFunctions.saveUserEmailKeyInSharedPreference(
+        PreferencesFunctions.saveUserNameKeyInSharedPreference(
             snapshotUSerInfo.documents[0].data['name']);
+      });
+      //
+      setState(() {
+        isLoading = true;
       });
       authMethos
           .signInWithEmailAndPassword(emailTextEditingController.text,
