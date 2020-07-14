@@ -29,7 +29,12 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
 //crear chatRoom, enviar al usuario a la vista de conversacion, pushreplacement
-  createChatRoomAndStarConversation() {}
+  createChatRoomAndStarConversation(String username) {
+    List<String> users = [
+      username,
+    ];
+    // databaseMethos.createChatRoom(chatRoomId, chatRoomMap)
+  }
 
   //lista de encontados
   Widget searchedlist() {

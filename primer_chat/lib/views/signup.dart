@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/auth.dart';
 import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/views/chatRoom.dart';
@@ -26,12 +27,18 @@ class _SignUpState extends State<SignUp> {
   AuthMethos authMethos = new AuthMethos();
   //metedos de base de datos
   DatabaseMethos databaseMethos = new DatabaseMethos();
+  //preferences
+  PreferencesFunctions prefs = new PreferencesFunctions();
   signMeUP() {
     if (formKey.currentState.validate()) {
       Map<String, String> userInfoMap = {
         "name": userTextEditingController.text,
         "email": emailTextEditingController.text
       };
+      PreferencesFunctions.saveUserNameKeyInSharedPreference(
+          userTextEditingController.text);
+      PreferencesFunctions.saveUserEmailKeyInSharedPreference(
+          emailTextEditingController.text);
       setState(() {
         isLoading = true;
       });
@@ -41,6 +48,7 @@ class _SignUpState extends State<SignUp> {
           .then((val) {
         //print("$val");
         databaseMethos.uploadUserInfo(userInfoMap);
+        PreferencesFunctions.saveUserLoggedInSharedPreference(true);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ChatRoom()));
       });
