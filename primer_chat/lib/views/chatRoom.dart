@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:primer_chat/helper/authenticate.dart';
 import 'package:primer_chat/services/auth.dart';
-import 'package:primer_chat/views/signin.dart';
+import 'package:primer_chat/views/search.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -29,6 +29,13 @@ class _ChatRoomState extends State<ChatRoom> {
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.search),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SearchScreen()));
+        },
       ),
     );
   }

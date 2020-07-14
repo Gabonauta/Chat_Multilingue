@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:primer_chat/services/auth.dart';
+import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/views/chatRoom.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
 
@@ -11,16 +12,26 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  //clave del formulario
   final formKey = GlobalKey<FormState>();
+  //controladores para textfield del formulario
   TextEditingController userTextEditingController = new TextEditingController();
   TextEditingController emailTextEditingController =
       new TextEditingController();
   TextEditingController passwordTextEditingController =
       new TextEditingController();
+  //controlar si el usuario esta logueado
   bool isLoading = false;
+  //metodos de autenticacion
   AuthMethos authMethos = new AuthMethos();
+  //metedos de base de datos
+  DatabaseMethos databaseMethos = new DatabaseMethos();
   signMeUP() {
     if (formKey.currentState.validate()) {
+      Map<String, String> userInfoMap = {
+        "name": userTextEditingController.text,
+        "email": emailTextEditingController.text
+      };
       setState(() {
         isLoading = true;
       });
@@ -29,6 +40,7 @@ class _SignUpState extends State<SignUp> {
               passwordTextEditingController.text)
           .then((val) {
         //print("$val");
+        databaseMethos.uploadUserInfo(userInfoMap);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ChatRoom()));
       });
