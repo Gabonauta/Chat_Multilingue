@@ -7,7 +7,9 @@ Chat_Multilingue
 +Abrir con Android Estudio, VSCODE o IDE de preferencia 
 
 +Comprobar el estado de FLUTTER DOCTOR
-Estado de Flutter Doctor en la implementacion:
+
+
+-Estado de Flutter Doctor en la implementacion:
 
 
 [flutter] flutter doctor -v
