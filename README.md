@@ -3,11 +3,13 @@ Chat_Multilingue
 *Para correr este proyecto*
 
 
-Clonar o descargar zip
-Abrir con Android Estudio, VSCODE o IDE de preferencia 
++Clonar o descargar zip
++Abrir con Android Estudio, VSCODE o IDE de preferencia 
 
-
++Comprobar el estado de FLUTTER DOCTOR
 Estado de Flutter Doctor en la implementacion:
+
+
 [flutter] flutter doctor -v
 [✓] Flutter (Channel stable, v1.17.3, on Linux, locale es_ES.UTF-8)
     • Flutter version 1.17.3 at /home/alex/flutter
@@ -31,6 +33,8 @@ Estado de Flutter Doctor en la implementacion:
 
 ! Doctor found issues in 1 category.
 exit code 0
+
++DESCARGAR Y ACTUALIZAR PAQUETES
 
 -Get Packages
 
