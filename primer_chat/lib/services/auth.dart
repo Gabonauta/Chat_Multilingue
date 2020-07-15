@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:primer_chat/model/user.dart';
-import 'package:primer_chat/views/signup.dart';
 
 class AuthMethos {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,13 +36,13 @@ class AuthMethos {
     } catch (e) {
       print(e.toString());
     }
+  }
 
-    Future signOut() async {
-      try {
-        return await _auth.signOut();
-      } catch (e) {
-        print(e.toString());
-      }
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

@@ -1,24 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/auth.dart';
+import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/views/chatRoom.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
 
 class SignUp extends StatefulWidget {
+  final Function toggle;
+  SignUp(this.toggle);
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
+  //clave del formulario
   final formKey = GlobalKey<FormState>();
+  //controladores para textfield del formulario
   TextEditingController userTextEditingController = new TextEditingController();
   TextEditingController emailTextEditingController =
       new TextEditingController();
   TextEditingController passwordTextEditingController =
       new TextEditingController();
+  //controlar si el usuario esta logueado
   bool isLoading = false;
+  //metodos de autenticacion
   AuthMethos authMethos = new AuthMethos();
+  //metedos de base de datos
+  DatabaseMethos databaseMethos = new DatabaseMethos();
+  //preferences
+  PreferencesFunctions prefs = new PreferencesFunctions();
   signMeUP() {
     if (formKey.currentState.validate()) {
+      Map<String, String> userInfoMap = {
+        "name": userTextEditingController.text,
+        "email": emailTextEditingController.text
+      };
+      PreferencesFunctions.saveUserNameKeyInSharedPreference(
+          userTextEditingController.text);
+      PreferencesFunctions.saveUserEmailKeyInSharedPreference(
+          emailTextEditingController.text);
       setState(() {
         isLoading = true;
       });
@@ -27,6 +47,8 @@ class _SignUpState extends State<SignUp> {
               passwordTextEditingController.text)
           .then((val) {
         //print("$val");
+        databaseMethos.uploadUserInfo(userInfoMap);
+        PreferencesFunctions.saveUserLoggedInSharedPreference(true);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ChatRoom()));
       });
@@ -151,12 +173,20 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             Text("Ya tienes una cuenta? ",
                                 style: mediumTextBlack()),
-                            Text(
-                              "Inicia Sesion",
-                              style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                  decoration: TextDecoration.underline),
+                            GestureDetector(
+                              onTap: () {
+                                widget.toggle();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  "Inicia Sesion",
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 18,
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ),
                             )
                           ]),
                       SizedBox(
