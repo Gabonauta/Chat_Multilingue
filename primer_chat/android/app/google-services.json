@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "397087409844",
+    "firebase_url": "https://chat-multiligue.firebaseio.com",
+    "project_id": "chat-multiligue",
+    "storage_bucket": "chat-multiligue.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397087409844:android:1fe448d4c5020eb88e79e1",
+        "android_client_info": {
+          "package_name": "com.example.primer_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397087409844-utoqfnk7c620ql0j90bae2h0ubpivr6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDvbWuSUpCk91xGBJ5EO8M6G3B-4GnK04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397087409844-utoqfnk7c620ql0j90bae2h0ubpivr6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
