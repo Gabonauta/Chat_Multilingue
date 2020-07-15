@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:primer_chat/views/chatRoom.dart';
 
 class DatabaseMethos {
   getUserByUsername(String username) async {
@@ -24,5 +25,32 @@ class DatabaseMethos {
         .collection("chatRoom")
         .document(chatRoomId)
         .setData(chatRoomMap);
+  }
+
+  addConversationMessages(String chatRoomID, messageMap) {
+    Firestore.instance
+        .collection("chatRoom")
+        .document(chatRoomID)
+        .collection("chats")
+        .add(messageMap)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  getConversationMessages(String chatRoomID) async {
+    return await Firestore.instance
+        .collection("chatRoom")
+        .document(chatRoomID)
+        .collection("chats")
+        .orderBy("time", descending: false)
+        .snapshots();
+  }
+
+  getChatRooms(String userName) async {
+    return await Firestore.instance
+        .collection("chatRoom")
+        .where("users", arrayContains: userName)
+        .snapshots();
   }
 }
