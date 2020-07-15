@@ -7,6 +7,8 @@ void main() {
   runApp(MyApp());
 }
 
+bool userIsLoggedIn = false;
+
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
@@ -14,7 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool userIsLoggedIn = false;
   @override
   void initState() {
     getLoggedState();
