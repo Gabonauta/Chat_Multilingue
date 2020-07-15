@@ -17,20 +17,24 @@ class _ConversationScreenState extends State<ConversationScreen> {
   //Streaming
   Stream chatMessagesStream;
   Widget ChatMessageList() {
-    return StreamBuilder(
-      stream: chatMessagesStream,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (context, index) {
-                  return MessageTile(
-                      snapshot.data.documents[index].data["message"],
-                      snapshot.data.documents[index].data["sendby"] ==
-                          Constants.myName);
-                })
-            : Container();
-      },
+    return Container(
+      padding: EdgeInsets.only(bottom: 80.0),
+      child: StreamBuilder(
+        stream: chatMessagesStream,
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  reverse: true,
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
+                    return MessageTile(
+                        snapshot.data.documents[index].data["message"],
+                        snapshot.data.documents[index].data["sendby"] ==
+                            Constants.myName);
+                  })
+              : Container();
+        },
+      ),
     );
   }
 

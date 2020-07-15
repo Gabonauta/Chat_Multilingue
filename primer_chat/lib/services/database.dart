@@ -43,7 +43,7 @@ class DatabaseMethos {
         .collection("chatRoom")
         .document(chatRoomID)
         .collection("chats")
-        .orderBy("time", descending: false)
+        .orderBy("time", descending: true)
         .snapshots();
   }
 
