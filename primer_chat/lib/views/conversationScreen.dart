@@ -65,6 +65,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     return Scaffold(
       appBar: appBarMain(context),
       body: Container(
+        color: const Color(0xff001B2E),
         child: Stack(
           children: [
             ChatMessageList(),
@@ -72,11 +73,27 @@ class _ConversationScreenState extends State<ConversationScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.cyanAccent, Colors.lightBlue])),
+                    gradient: LinearGradient(colors: [
+                  const Color(0xffADB6C4),
+                  const Color(0xffADB6C4)
+                ])),
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 child: Row(
                   children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            const Color(0xffADB6C4),
+                            const Color(0xffADB6C4)
+                          ]),
+                          borderRadius: BorderRadius.circular(40)),
+                      padding: EdgeInsets.all(7),
+                      child: Image.asset(
+                        "assets/images/translate.png",
+                      ),
+                    ),
                     Expanded(
                         child: TextField(
                       controller: messageController,
@@ -93,10 +110,12 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Colors.white, Colors.cyan]),
+                            gradient: LinearGradient(colors: [
+                              const Color(0xffADB6C4),
+                              const Color(0xffADB6C4)
+                            ]),
                             borderRadius: BorderRadius.circular(40)),
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(7),
                         child: Image.asset(
                           "assets/images/enviar.png",
                         ),
@@ -130,8 +149,8 @@ class MessageTile extends StatelessWidget {
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: isSendByMe
-                    ? [Colors.green, Colors.yellow]
-                    : [Colors.red, Colors.orange]),
+                    ? [const Color(0xffFFEFD3), const Color(0xffFFEFD3)]
+                    : [const Color(0xffFFC49B), const Color(0xffFFC49B)]),
             borderRadius: isSendByMe
                 ? BorderRadius.only(
                     topLeft: Radius.circular(23),

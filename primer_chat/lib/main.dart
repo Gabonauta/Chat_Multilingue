@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/views/chatRoom.dart';
 import 'helper/authenticate.dart';
+import 'package:dcdg/dcdg.dart';
 
 void main() {
   runApp(MyApp());

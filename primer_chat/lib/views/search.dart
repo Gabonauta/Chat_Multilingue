@@ -113,7 +113,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             Container(
-              color: Colors.grey,
+              color: const Color(0xffADB6C4),
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
               child: Row(
                 children: [
@@ -133,8 +133,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.blueGrey, Colors.black]),
+                          gradient: LinearGradient(colors: [
+                            const Color(0xff294C60),
+                            const Color(0xff294C60)
+                          ]),
                           borderRadius: BorderRadius.circular(40)),
                       padding: EdgeInsets.all(5),
                       child: Image.asset(

@@ -59,6 +59,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xff294C60),
         //tittle
         actions: [
           GestureDetector(
@@ -77,6 +78,7 @@ class _ChatRoomState extends State<ChatRoom> {
       ),
       body: chatRoomList(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xff294C60),
         child: Icon(Icons.search),
         onPressed: () {
           Navigator.push(
@@ -110,7 +112,8 @@ class ChatRoomTile extends StatelessWidget {
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(40)),
+                  color: const Color(0xff294C60),
+                  borderRadius: BorderRadius.circular(40)),
               child: Text("${userName.substring(0, 1).toUpperCase()}",
                   style: mediumText()),
             ),
