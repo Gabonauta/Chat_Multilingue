@@ -89,7 +89,10 @@ class _SearchScreenState extends State<SearchScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [Colors.blue, Colors.cyan]),
+                  gradient: LinearGradient(colors: [
+                    const Color(0xff294C60),
+                    const Color(0xff294C60)
+                  ]),
                   borderRadius: BorderRadius.circular(10)),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text("Enviar mensaje"),
