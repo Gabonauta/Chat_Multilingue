@@ -137,7 +137,6 @@ class _MessageTileState extends State<MessageTile> {
   var mensaje;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       mensaje = widget.message;
@@ -154,7 +153,9 @@ class _MessageTileState extends State<MessageTile> {
     return Container(
       padding: EdgeInsets.only(
           left: widget.isSendByMe ? 0 : 24, right: widget.isSendByMe ? 24 : 0),
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+      margin: widget.isSendByMe
+          ? EdgeInsets.only(right: 2, left: 50, top: 5, bottom: 5)
+          : EdgeInsets.only(right: 50, left: 2, top: 5, bottom: 5),
       width: MediaQuery.of(context).size.width,
       alignment:
           widget.isSendByMe ? Alignment.centerRight : Alignment.centerLeft,
@@ -175,9 +176,11 @@ class _MessageTileState extends State<MessageTile> {
                     topRight: Radius.circular(23),
                     bottomRight: Radius.circular(23))),
         child: Row(children: [
-          Text(
-            mensaje,
-            style: TextStyle(fontSize: 18, color: Colors.black87),
+          Expanded(
+            child: Text(
+              mensaje,
+              style: TextStyle(fontSize: 18, color: Colors.black87),
+            ),
           ),
           GestureDetector(
             onTap: () async {
