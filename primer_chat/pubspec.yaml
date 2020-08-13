@@ -32,6 +32,8 @@ dependencies:
   cloud_firestore: ^0.13.7
   shared_preferences: ^0.5.8
   dcdg: ^2.0.1
+  translator: ^0.1.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
