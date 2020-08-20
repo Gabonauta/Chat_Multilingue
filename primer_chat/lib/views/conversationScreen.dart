@@ -6,7 +6,6 @@ import 'package:translator/translator.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String chatRoomId;
-
   ConversationScreen(this.chatRoomId);
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
@@ -16,11 +15,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
   //database
   DatabaseMethos databaseMethos = new DatabaseMethos();
   TextEditingController messageController = new TextEditingController();
-
   //Streaming
   Stream chatMessagesStream;
-
-  void translate() {}
 
   Widget ChatMessageList() {
     return Container(
@@ -30,7 +26,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
         builder: (context, snapshot) {
           return snapshot.hasData
               ? ListView.builder(
-                  reverse: true,
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
                     return MessageTile(
@@ -86,6 +81,20 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 child: Row(
                   children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            const Color(0xffADB6C4),
+                            const Color(0xffADB6C4)
+                          ]),
+                          borderRadius: BorderRadius.circular(40)),
+                      padding: EdgeInsets.all(7),
+                      child: Image.asset(
+                        "assets/images/translate.png",
+                      ),
+                    ),
                     Expanded(
                         child: TextField(
                       controller: messageController,
