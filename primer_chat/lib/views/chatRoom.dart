@@ -6,6 +6,7 @@ import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/auth.dart';
 import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/views/conversationScreen.dart';
+import 'package:primer_chat/views/language.dart';
 import 'package:primer_chat/views/search.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
 
@@ -62,6 +63,16 @@ class _ChatRoomState extends State<ChatRoom> {
         backgroundColor: const Color(0xff294C60),
         //tittle
         actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => LanguageScreen()));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Icon(Icons.translate),
+            ),
+          ),
           GestureDetector(
             onTap: () {
               authMethos.signOut();

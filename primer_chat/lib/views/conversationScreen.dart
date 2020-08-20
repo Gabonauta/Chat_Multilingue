@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:primer_chat/helper/constants.dart';
+import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -153,7 +155,19 @@ class _MessageTileState extends State<MessageTile> {
   }
 
   Future<String> translation(String message) async {
-    final newMessage = await translator.translate(message, to: 'en');
+    final lang = PreferencesFunctions.getUserLanguageInSharedPreference();
+    String asing = "";
+    if (await lang == "Ingles") {
+      asing = 'en';
+    } else if (await lang == "Chino") {
+      asing = 'zh-cn';
+    } else if (await lang == "Español") {
+      asing = 'es';
+    } else if (await lang == "Portugues") {
+      asing = 'pt';
+    }
+
+    final newMessage = await translator.translate(message, to: asing);
     return newMessage.toString();
   }
 
