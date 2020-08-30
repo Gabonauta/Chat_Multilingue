@@ -155,8 +155,8 @@ class _MessageTileState extends State<MessageTile> {
       isTranslated = true;
       if (await lang == "Ingles") {
         asing = 'en';
-      } else if (await lang == "Chino") {
-        asing = 'zh-cn';
+      } else if (await lang == "Frances") {
+        asing = 'fr';
       } else if (await lang == "Español") {
         asing = 'es';
       } else if (await lang == "Portugues") {

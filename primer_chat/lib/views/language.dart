@@ -28,7 +28,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           dropdownValue = newValue;
         });
       },
-      items: <String>['Español', 'Ingles', 'Chino', 'Portugues']
+      items: <String>['Español', 'Ingles', 'Frances', 'Portugues']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
