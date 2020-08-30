@@ -3,12 +3,12 @@ import 'package:primer_chat/helper/constants.dart';
 import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String chatRoomId;
-  ConversationScreen(this.chatRoomId);
+  final String person;
+  ConversationScreen(this.chatRoomId, this.person);
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
 }
@@ -17,6 +17,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   //database
   DatabaseMethos databaseMethos = new DatabaseMethos();
   TextEditingController messageController = new TextEditingController();
+
   //Streaming
   Stream chatMessagesStream;
 
@@ -66,7 +67,12 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain(context),
+      appBar: AppBar(
+          backgroundColor: const Color(0xff294C60),
+          title: Title(
+            color: const Color(0xff294C60),
+            child: Text(widget.person),
+          )),
       body: Container(
         color: const Color(0xff001B2E),
         child: Stack(
@@ -83,20 +89,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 child: Row(
                   children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            const Color(0xffADB6C4),
-                            const Color(0xffADB6C4)
-                          ]),
-                          borderRadius: BorderRadius.circular(40)),
-                      padding: EdgeInsets.all(7),
-                      child: Image.asset(
-                        "assets/images/translate.png",
-                      ),
-                    ),
                     Expanded(
                         child: TextField(
                       controller: messageController,
@@ -140,12 +132,14 @@ class MessageTile extends StatefulWidget {
   _MessageTileState createState() => _MessageTileState();
   final message;
   final bool isSendByMe;
+
   MessageTile(this.message, this.isSendByMe);
 }
 
 class _MessageTileState extends State<MessageTile> {
   GoogleTranslator translator = GoogleTranslator();
   var mensaje;
+  bool isTranslated = false;
   @override
   void initState() {
     super.initState();
@@ -157,15 +151,32 @@ class _MessageTileState extends State<MessageTile> {
   Future<String> translation(String message) async {
     final lang = PreferencesFunctions.getUserLanguageInSharedPreference();
     String asing = "";
-    if (await lang == "Ingles") {
-      asing = 'en';
-    } else if (await lang == "Chino") {
-      asing = 'zh-cn';
-    } else if (await lang == "Español") {
+    if (this.isTranslated == false) {
+      isTranslated = true;
+      if (await lang == "Ingles") {
+        asing = 'en';
+      } else if (await lang == "Chino") {
+        asing = 'zh-cn';
+      } else if (await lang == "Español") {
+        asing = 'es';
+      } else if (await lang == "Portugues") {
+        asing = 'pt';
+      }
+    } else {
       asing = 'es';
-    } else if (await lang == "Portugues") {
-      asing = 'pt';
+      isTranslated = false;
     }
+
+    final newMessage = await translator.translate(message, to: asing);
+    return newMessage.toString();
+  }
+
+  Future<String> translation2(String message) async {
+    final lang = PreferencesFunctions.getUserLanguageInSharedPreference();
+    String asing = "";
+
+    asing = 'es';
+    isTranslated = false;
 
     final newMessage = await translator.translate(message, to: asing);
     return newMessage.toString();
@@ -207,13 +218,28 @@ class _MessageTileState extends State<MessageTile> {
           ),
           GestureDetector(
             onTap: () async {
-              var newmessage;
+              var newmessage = widget.message;
               try {
                 newmessage = await translation(mensaje);
               } catch (e) {
+                print(e.toString());
+
                 newmessage = "No se puede traducir";
               }
 
+              setState(() {
+                mensaje = newmessage;
+              });
+            },
+            onDoubleTap: () async {
+              var newmessage = widget.message;
+              try {
+                newmessage = await translation2(mensaje);
+              } catch (e) {
+                print(e.toString());
+
+                newmessage = "No se puede traducir";
+              }
               setState(() {
                 mensaje = newmessage;
               });

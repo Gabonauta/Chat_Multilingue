@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget appBarMain(BuildContext context) {
   return AppBar(
     backgroundColor: const Color(0xff294C60),
-    //title: Image.asset("assets/images/appbar.png"),
+    title: Image.asset("assets/images/tittle.png"),
   );
 }
 

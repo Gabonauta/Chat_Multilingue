@@ -61,7 +61,7 @@ class _ChatRoomState extends State<ChatRoom> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff294C60),
-        //tittle
+        title: Image.asset("assets/images/tittle.png"),
         actions: [
           GestureDetector(
             onTap: () {
@@ -70,7 +70,7 @@ class _ChatRoomState extends State<ChatRoom> {
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(Icons.translate),
+              child: Icon(Icons.flag),
             ),
           ),
           GestureDetector(
@@ -111,7 +111,8 @@ class ChatRoomTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ConversationScreen(chatRoomId)));
+                builder: (context) =>
+                    ConversationScreen(chatRoomId, userName)));
       },
       child: Container(
         color: Colors.white24,
