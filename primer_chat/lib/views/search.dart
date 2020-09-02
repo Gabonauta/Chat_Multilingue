@@ -58,7 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ConversationScreen(chatRoomId)));
+              builder: (context) => ConversationScreen(chatRoomId, userName)));
     } else {
       print("Debes enviar mensajes a otra persona");
     }
@@ -89,7 +89,10 @@ class _SearchScreenState extends State<SearchScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [Colors.blue, Colors.cyan]),
+                  gradient: LinearGradient(colors: [
+                    const Color(0xff294C60),
+                    const Color(0xff294C60)
+                  ]),
                   borderRadius: BorderRadius.circular(10)),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text("Enviar mensaje"),
@@ -113,7 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             Container(
-              color: Colors.grey,
+              color: const Color(0xffADB6C4),
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
               child: Row(
                 children: [
@@ -133,8 +136,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.blueGrey, Colors.black]),
+                          gradient: LinearGradient(colors: [
+                            const Color(0xff294C60),
+                            const Color(0xff294C60)
+                          ]),
                           borderRadius: BorderRadius.circular(40)),
                       padding: EdgeInsets.all(5),
                       child: Image.asset(

@@ -1,0 +1,209 @@
+@startuml
+set namespaceSeparator ::
+
+class "primer_chat::helper::preferencesFunctions.dart::PreferencesFunctions" {
+  {static} +String sharedPreferenceUserLoggedInKey
+  {static} +String sharedPreferenceUserNameKey
+  {static} +String sharedPreferenceUserEmailKey
+  {static} +Future saveUserLoggedInSharedPreference()
+  {static} +Future saveUserNameKeyInSharedPreference()
+  {static} +Future saveUserEmailKeyInSharedPreference()
+  {static} +Future getUserLoggedInSharedPreference()
+  {static} +Future getUserNameKeyInSharedPreference()
+  {static} +Future getUserEmailKeyInSharedPreference()
+}
+
+class "primer_chat::helper::constants.dart::Constants" {
+  {static} +String myName
+}
+
+class "primer_chat::helper::authenticate.dart::Authenticate" {
+  +_AuthenticateState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::helper::authenticate.dart::Authenticate"
+
+class "primer_chat::helper::authenticate.dart::_AuthenticateState" {
+  +bool showSignIn
+  +void toggleView()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::helper::authenticate.dart::_AuthenticateState"
+
+class "primer_chat::services::auth.dart::AuthMethos" {
+  -FirebaseAuth _auth
+  -User _userFromFirebaseUser()
+  +Future signInWithEmailAndPassword()
+  +Future singUpwithEmailandPassword()
+  +Future resetPass()
+  +Future signOut()
+}
+
+"primer_chat::services::auth.dart::AuthMethos" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+
+class "primer_chat::services::database.dart::DatabaseMethos" {
+  +dynamic getUserByUsername()
+  +dynamic getUserByUserEmail()
+  +dynamic uploadUserInfo()
+  +dynamic createChatRoom()
+  +dynamic addConversationMessages()
+  +dynamic getConversationMessages()
+  +dynamic getChatRooms()
+}
+
+class "primer_chat::model::user.dart::User" {
+  +String userId
+}
+
+class "primer_chat::views::signup.dart::SignUp" {
+  +Function toggle
+  +_SignUpState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::views::signup.dart::SignUp"
+
+class "primer_chat::views::signup.dart::_SignUpState" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController userTextEditingController
+  +TextEditingController emailTextEditingController
+  +TextEditingController passwordTextEditingController
+  +bool isLoading
+  +AuthMethos authMethos
+  +DatabaseMethos databaseMethos
+  +PreferencesFunctions prefs
+  +dynamic signMeUP()
+  +Widget build()
+}
+
+"primer_chat::views::signup.dart::_SignUpState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"primer_chat::views::signup.dart::_SignUpState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"primer_chat::views::signup.dart::_SignUpState" o-- "primer_chat::services::auth.dart::AuthMethos"
+"primer_chat::views::signup.dart::_SignUpState" o-- "primer_chat::services::database.dart::DatabaseMethos"
+"primer_chat::views::signup.dart::_SignUpState" o-- "primer_chat::helper::preferencesFunctions.dart::PreferencesFunctions"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::views::signup.dart::_SignUpState"
+
+class "primer_chat::views::chatRoom.dart::ChatRoom" {
+  +_ChatRoomState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::views::chatRoom.dart::ChatRoom"
+
+class "primer_chat::views::chatRoom.dart::_ChatRoomState" {
+  +AuthMethos authMethos
+  +DatabaseMethos databaseMethos
+  +Stream chatRoomStream
+  +Widget chatRoomList()
+  +void initState()
+  +dynamic getUserInfo()
+  +Widget build()
+}
+
+"primer_chat::views::chatRoom.dart::_ChatRoomState" o-- "primer_chat::services::auth.dart::AuthMethos"
+"primer_chat::views::chatRoom.dart::_ChatRoomState" o-- "primer_chat::services::database.dart::DatabaseMethos"
+"primer_chat::views::chatRoom.dart::_ChatRoomState" o-- "dart::async::Stream"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::views::chatRoom.dart::_ChatRoomState"
+
+class "primer_chat::views::chatRoom.dart::ChatRoomTile" {
+  +String userName
+  +String chatRoomId
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "primer_chat::views::chatRoom.dart::ChatRoomTile"
+
+class "primer_chat::views::search.dart::SearchScreen" {
+  +_SearchScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::views::search.dart::SearchScreen"
+
+class "primer_chat::views::search.dart::_SearchScreenState" {
+  +TextEditingController searchTextEditingController
+  +DatabaseMethos databaseMethos
+  +QuerySnapshot searchSnapShot
+  +Widget searchedlist()
+  +dynamic iniciateSearch()
+  +dynamic createChatRoomAndStarConversation()
+  +Widget SearchTile()
+  +void initState()
+  +Widget build()
+}
+
+"primer_chat::views::search.dart::_SearchScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"primer_chat::views::search.dart::_SearchScreenState" o-- "primer_chat::services::database.dart::DatabaseMethos"
+"primer_chat::views::search.dart::_SearchScreenState" o-- "cloud_firestore::cloud_firestore.dart::QuerySnapshot"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::views::search.dart::_SearchScreenState"
+
+class "primer_chat::views::conversationScreen.dart::ConversationScreen" {
+  +String chatRoomId
+  +_ConversationScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::views::conversationScreen.dart::ConversationScreen"
+
+class "primer_chat::views::conversationScreen.dart::_ConversationScreenState" {
+  +DatabaseMethos databaseMethos
+  +TextEditingController messageController
+  +Stream chatMessagesStream
+  +Widget ChatMessageList()
+  +dynamic sendMessage()
+  +void initState()
+  +Widget build()
+}
+
+"primer_chat::views::conversationScreen.dart::_ConversationScreenState" o-- "primer_chat::services::database.dart::DatabaseMethos"
+"primer_chat::views::conversationScreen.dart::_ConversationScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"primer_chat::views::conversationScreen.dart::_ConversationScreenState" o-- "dart::async::Stream"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::views::conversationScreen.dart::_ConversationScreenState"
+
+class "primer_chat::views::conversationScreen.dart::MessageTile" {
+  +String message
+  +bool isSendByMe
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "primer_chat::views::conversationScreen.dart::MessageTile"
+
+class "primer_chat::views::signin.dart::SignIn" {
+  +Function toggle
+  +_SignInState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::views::signin.dart::SignIn"
+
+class "primer_chat::views::signin.dart::_SignInState" {
+  +AuthMethos authMethos
+  +DatabaseMethos databaseMethos
+  +TextEditingController emailTextEditingController
+  +TextEditingController passwordTextEditingController
+  +GlobalKey<FormState> formkey
+  +bool isLoading
+  +QuerySnapshot snapshotUSerInfo
+  +dynamic signIn()
+  +Widget build()
+}
+
+"primer_chat::views::signin.dart::_SignInState" o-- "primer_chat::services::auth.dart::AuthMethos"
+"primer_chat::views::signin.dart::_SignInState" o-- "primer_chat::services::database.dart::DatabaseMethos"
+"primer_chat::views::signin.dart::_SignInState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"primer_chat::views::signin.dart::_SignInState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"primer_chat::views::signin.dart::_SignInState" o-- "cloud_firestore::cloud_firestore.dart::QuerySnapshot"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::views::signin.dart::_SignInState"
+
+class "primer_chat::main.dart::MyApp" {
+  +_MyAppState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "primer_chat::main.dart::MyApp"
+
+class "primer_chat::main.dart::_MyAppState" {
+  +void initState()
+  +dynamic getLoggedState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "primer_chat::main.dart::_MyAppState"
+
+
+@enduml

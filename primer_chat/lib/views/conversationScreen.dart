@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:primer_chat/helper/constants.dart';
+import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
+import 'package:translator/translator.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String chatRoomId;
-  ConversationScreen(this.chatRoomId);
+  final String person;
+  ConversationScreen(this.chatRoomId, this.person);
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
 }
@@ -14,8 +17,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
   //database
   DatabaseMethos databaseMethos = new DatabaseMethos();
   TextEditingController messageController = new TextEditingController();
+
   //Streaming
   Stream chatMessagesStream;
+
   Widget ChatMessageList() {
     return Container(
       padding: EdgeInsets.only(bottom: 80.0),
@@ -24,7 +29,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
         builder: (context, snapshot) {
           return snapshot.hasData
               ? ListView.builder(
-                  reverse: true,
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
                     return MessageTile(
@@ -63,8 +67,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain(context),
+      appBar: AppBar(
+          backgroundColor: const Color(0xff294C60),
+          title: Title(
+            color: const Color(0xff294C60),
+            child: Text(widget.person),
+          )),
       body: Container(
+        color: const Color(0xff001B2E),
         child: Stack(
           children: [
             ChatMessageList(),
@@ -72,8 +82,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.cyanAccent, Colors.lightBlue])),
+                    gradient: LinearGradient(colors: [
+                  const Color(0xffADB6C4),
+                  const Color(0xffADB6C4)
+                ])),
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 child: Row(
                   children: [
@@ -93,10 +105,12 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Colors.white, Colors.cyan]),
+                            gradient: LinearGradient(colors: [
+                              const Color(0xffADB6C4),
+                              const Color(0xffADB6C4)
+                            ]),
                             borderRadius: BorderRadius.circular(40)),
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(7),
                         child: Image.asset(
                           "assets/images/enviar.png",
                         ),
@@ -113,26 +127,80 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 }
 
-class MessageTile extends StatelessWidget {
-  final String message;
+class MessageTile extends StatefulWidget {
+  @override
+  _MessageTileState createState() => _MessageTileState();
+  final message;
   final bool isSendByMe;
+
   MessageTile(this.message, this.isSendByMe);
+}
+
+class _MessageTileState extends State<MessageTile> {
+  GoogleTranslator translator = GoogleTranslator();
+  var mensaje;
+  bool isTranslated = false;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      mensaje = widget.message;
+    });
+  }
+
+  Future<String> translation(String message) async {
+    final lang = PreferencesFunctions.getUserLanguageInSharedPreference();
+    String asing = "";
+    if (this.isTranslated == false) {
+      isTranslated = true;
+      if (await lang == "Ingles") {
+        asing = 'en';
+      } else if (await lang == "Frances") {
+        asing = 'fr';
+      } else if (await lang == "Español") {
+        asing = 'es';
+      } else if (await lang == "Portugues") {
+        asing = 'pt';
+      }
+    } else {
+      asing = 'es';
+      isTranslated = false;
+    }
+
+    final newMessage = await translator.translate(message, to: asing);
+    return newMessage.toString();
+  }
+
+  Future<String> translation2(String message) async {
+    final lang = PreferencesFunctions.getUserLanguageInSharedPreference();
+    String asing = "";
+
+    asing = 'es';
+    isTranslated = false;
+
+    final newMessage = await translator.translate(message, to: asing);
+    return newMessage.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          left: isSendByMe ? 0 : 24, right: isSendByMe ? 24 : 0),
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+          left: widget.isSendByMe ? 0 : 24, right: widget.isSendByMe ? 24 : 0),
+      margin: widget.isSendByMe
+          ? EdgeInsets.only(right: 2, left: 50, top: 5, bottom: 5)
+          : EdgeInsets.only(right: 50, left: 2, top: 5, bottom: 5),
       width: MediaQuery.of(context).size.width,
-      alignment: isSendByMe ? Alignment.centerRight : Alignment.centerLeft,
+      alignment:
+          widget.isSendByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 14),
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: isSendByMe
-                    ? [Colors.green, Colors.yellow]
-                    : [Colors.red, Colors.orange]),
-            borderRadius: isSendByMe
+                colors: widget.isSendByMe
+                    ? [const Color(0xffFFEFD3), const Color(0xffFFEFD3)]
+                    : [const Color(0xffFFC49B), const Color(0xffFFC49B)]),
+            borderRadius: widget.isSendByMe
                 ? BorderRadius.only(
                     topLeft: Radius.circular(23),
                     topRight: Radius.circular(23),
@@ -141,10 +209,58 @@ class MessageTile extends StatelessWidget {
                     topLeft: Radius.circular(23),
                     topRight: Radius.circular(23),
                     bottomRight: Radius.circular(23))),
-        child: Text(
-          message,
-          style: TextStyle(fontSize: 18, color: Colors.black87),
-        ),
+        child: Row(children: [
+          Expanded(
+            child: Text(
+              mensaje,
+              style: TextStyle(fontSize: 18, color: Colors.black87),
+            ),
+          ),
+          GestureDetector(
+            onTap: () async {
+              var newmessage = widget.message;
+              try {
+                newmessage = await translation(mensaje);
+              } catch (e) {
+                print(e.toString());
+
+                newmessage = "No se puede traducir";
+              }
+
+              setState(() {
+                mensaje = newmessage;
+              });
+            },
+            onDoubleTap: () async {
+              var newmessage = widget.message;
+              try {
+                newmessage = await translation2(mensaje);
+              } catch (e) {
+                print(e.toString());
+
+                newmessage = "No se puede traducir";
+              }
+              setState(() {
+                mensaje = newmessage;
+              });
+            },
+            child: Container(
+                child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    const Color(0xffADB6C4),
+                    const Color(0xffADB6C4)
+                  ]),
+                  borderRadius: BorderRadius.circular(40)),
+              padding: EdgeInsets.all(7),
+              child: Image.asset(
+                "assets/images/translate.png",
+              ),
+            )),
+          )
+        ]),
       ),
     );
   }

@@ -142,8 +142,10 @@ class _SignUpState extends State<SignUp> {
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.symmetric(vertical: 20),
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [Colors.blueAccent, Colors.cyan]),
+                              gradient: LinearGradient(colors: [
+                                const Color(0xff294C60),
+                                const Color(0xff294C60)
+                              ]),
                               borderRadius: BorderRadius.circular(30)),
                           child: Text("Registrate", style: mediumText()),
                         ),
@@ -157,9 +159,8 @@ class _SignUpState extends State<SignUp> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                             gradient: LinearGradient(colors: [
-                              Colors.blueAccent,
-                              Colors.redAccent,
-                              Colors.yellowAccent
+                              const Color(0xff294C60),
+                              const Color(0xff294C60)
                             ]),
                             borderRadius: BorderRadius.circular(30)),
                         child:

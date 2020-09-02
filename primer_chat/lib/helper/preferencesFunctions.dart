@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //preferences package sirve para guardar localmente las configuraciones como mantener logueado al usuario
@@ -5,6 +6,7 @@ class PreferencesFunctions {
   static String sharedPreferenceUserLoggedInKey = "ISLOGGUEDIN";
   static String sharedPreferenceUserNameKey = "USERNAMEKEY";
   static String sharedPreferenceUserEmailKey = "USEREMAILKEY";
+  static String sharedPreferenceUserLanguageKey = "USERLANGUAGEKEY";
   //guardando data
 
   static Future<bool> saveUserLoggedInSharedPreference(
@@ -24,6 +26,12 @@ class PreferencesFunctions {
     return await prefs.setString(sharedPreferenceUserEmailKey, userEmail);
   }
 
+  static Future<bool> saveUserLanguageInSharedPreference(
+      String userLanguaje) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setString(sharedPreferenceUserLanguageKey, userLanguaje);
+  }
+
   //recuperando data de sharedPreferences
   static Future<bool> getUserLoggedInSharedPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,5 +47,10 @@ class PreferencesFunctions {
       String userEmail) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.getString(sharedPreferenceUserEmailKey);
+  }
+
+  static Future<String> getUserLanguageInSharedPreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.getString(sharedPreferenceUserLanguageKey);
   }
 }

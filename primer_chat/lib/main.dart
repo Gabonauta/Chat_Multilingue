@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/views/chatRoom.dart';
 import 'helper/authenticate.dart';
+import 'package:dcdg/dcdg.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+bool userIsLoggedIn = false;
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
@@ -14,7 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool userIsLoggedIn = false;
   @override
   void initState() {
     getLoggedState();
