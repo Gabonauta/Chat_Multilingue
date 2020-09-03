@@ -8,9 +8,8 @@ void main() {
   runApp(MyApp());
 }
 
-bool userIsLoggedIn = false;
-
 class MyApp extends StatefulWidget {
+  bool userIsLoggedIn = false;
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
@@ -19,14 +18,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    getLoggedState();
-    super.initState();
+    if (widget.userIsLoggedIn == null) {
+      widget.userIsLoggedIn = false;
+      getLoggedState();
+      super.initState();
+    }
   }
 
   getLoggedState() async {
     await PreferencesFunctions.getUserLoggedInSharedPreference().then((value) {
       setState(() {
-        userIsLoggedIn = value;
+        widget.userIsLoggedIn = value;
       });
     });
   }
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: userIsLoggedIn ? ChatRoom() : Authenticate(),
+      home: widget.userIsLoggedIn ? ChatRoom() : Authenticate(),
     );
   }
 }
