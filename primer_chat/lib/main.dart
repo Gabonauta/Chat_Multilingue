@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  bool userIsLoggedIn = false;
+  var userIsLoggedIn;
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
@@ -18,11 +18,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    getLoggedState();
     if (widget.userIsLoggedIn == null) {
       widget.userIsLoggedIn = false;
-      getLoggedState();
-      super.initState();
     }
+    super.initState();
   }
 
   getLoggedState() async {

@@ -3,6 +3,7 @@ import 'package:primer_chat/helper/constants.dart';
 import 'package:primer_chat/helper/preferencesFunctions.dart';
 import 'package:primer_chat/services/database.dart';
 import 'package:primer_chat/widgets/widget_appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
+  String dropdownValue = 'Español';
+  final lang = PreferencesFunctions.getUserLanguageInSharedPreference();
+
   //database
   DatabaseMethos databaseMethos = new DatabaseMethos();
   TextEditingController messageController = new TextEditingController();
@@ -69,10 +73,52 @@ class _ConversationScreenState extends State<ConversationScreen> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color(0xff294C60),
-          title: Title(
+          title:
+              /*Title(
             color: const Color(0xff294C60),
-            child: Text(widget.person),
-          )),
+            child: 
+          ),*/
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                Text(widget.person),
+                Container(
+                    color: const Color(0xffADB6C4),
+                    child: DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: new DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: Icon(Icons.arrow_downward),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.black87),
+                              underline: Container(
+                                height: 2,
+                                color: Colors.deepPurpleAccent,
+                              ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                  PreferencesFunctions
+                                      .saveUserLanguageInSharedPreference(
+                                          dropdownValue);
+                                });
+                              },
+                              items: <String>[
+                                'Español',
+                                'Ingles',
+                                'Frances',
+                                'Portugues'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ))))
+              ])),
       body: Container(
         color: const Color(0xff001B2E),
         child: Stack(
